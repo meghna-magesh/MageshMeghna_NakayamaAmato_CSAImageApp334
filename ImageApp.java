@@ -1,6 +1,9 @@
+
+
 /*
   ImageApp: 
  */
+
 import java.awt.Color;
 
 public class ImageApp
@@ -15,25 +18,42 @@ public class ImageApp
     Picture origImg = new Picture(pictureFile);
     Pixel[][] origPixels = origImg.getPixels2D();
     System.out.println(origPixels[0][0].getColor());
-    origImg.explore();
+    //origImg.explore();
 
     // Image #1 Using the original image and pixels, recolor an image by changing the RGB color of each Pixel
     Picture recoloredImg = new Picture(pictureFile);
     Pixel[][] recoloredPixels = recoloredImg.getPixels2D();
 
     /* to be implemented */
+    //recoloredPixels[0][0].setColor(new Color(origPixels[0][0].getBlue(), origPixels[0][0].getGreen(), origPixels[0][0].getRed()));
+    recoloredPixels[0][0].setColor(new Color(3, 2, 4));
+    System.out.println(recoloredPixels[0][0].getColor());
+    //recoloredImg.explore();
 
     // Image #2 Using the original image and pixels, create a photographic negative of the image
     Picture negImg = new Picture(pictureFile);
     Pixel[][] negPixels = negImg.getPixels2D();
 
     /* to be implemented */
+    negPixels[0][0].setColor(new Color(255 - origPixels[0][0].getRed(),
+                                       255 - origPixels[0][0].getGreen(),
+                                       255 - origPixels[0][0].getBlue()));
+    System.out.println(negPixels[0][0].getColor());
+    //negImg.explore();
 
     // Image #3 Using the original image and pixels, create a grayscale version of the image
     Picture grayscaleImg = new Picture(pictureFile);
     Pixel[][] grayscalePixels = grayscaleImg.getPixels2D();
 
     /* to be implemented */
+    for (int row = 0; row < grayscalePixels.length; row++) {
+      for (int col = 0; col < grayscalePixels[0].length; col++) {
+        int avg = (origPixels[row][col].getRed() + origPixels[row][col].getGreen() + origPixels[row][col].getBlue()) / 3;
+        grayscalePixels[row][col].setColor(new Color(avg, avg, avg));
+      }
+    }
+    // display the new grayscale image once
+    grayscaleImg.explore();
 
     // Image #4 Using the original image and pixels, rotate it 180 degrees
     Picture upsidedownImage = new Picture(pictureFile);
