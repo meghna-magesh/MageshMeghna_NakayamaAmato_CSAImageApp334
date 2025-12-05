@@ -1,5 +1,3 @@
-
-
 /*
   ImageApp: 
  */
@@ -18,28 +16,37 @@ public class ImageApp
     Picture origImg = new Picture(pictureFile);
     Pixel[][] origPixels = origImg.getPixels2D();
     System.out.println(origPixels[0][0].getColor());
-    //origImg.explore();
+    origImg.explore();
 
     // Image #1 Using the original image and pixels, recolor an image by changing the RGB color of each Pixel
     Picture recoloredImg = new Picture(pictureFile);
     Pixel[][] recoloredPixels = recoloredImg.getPixels2D();
 
     /* to be implemented */
-    //recoloredPixels[0][0].setColor(new Color(origPixels[0][0].getBlue(), origPixels[0][0].getGreen(), origPixels[0][0].getRed()));
-    recoloredPixels[0][0].setColor(new Color(3, 2, 4));
-    System.out.println(recoloredPixels[0][0].getColor());
-    //recoloredImg.explore();
+    for (int row = 0; row < recoloredPixels.length; row++) {
+      for (int col = 0; col < recoloredPixels[0].length; col++) {
+        Pixel p = origPixels[row][col];
+        recoloredPixels[row][col].setColor(new Color(p.getBlue(), p.getGreen(), p.getRed()));
+        //recoloredPixels[row][col].setColor(new Color(p.getGreen(), p.getRed(), p.getBlue()));
+        //recoloredPixels[row][col].setColor(new Color(p.getRed(), p.getBlue(), p.getGreen()));
+      }
+    }
+    recoloredImg.explore();
 
     // Image #2 Using the original image and pixels, create a photographic negative of the image
     Picture negImg = new Picture(pictureFile);
     Pixel[][] negPixels = negImg.getPixels2D();
 
     /* to be implemented */
-    negPixels[0][0].setColor(new Color(255 - origPixels[0][0].getRed(),
-                                       255 - origPixels[0][0].getGreen(),
-                                       255 - origPixels[0][0].getBlue()));
-    System.out.println(negPixels[0][0].getColor());
-    //negImg.explore();
+    for (int row = 0; row < negPixels.length; row++) {
+      for (int col = 0; col < negPixels[0].length; col++) {
+        Pixel p = origPixels[row][col];
+        negPixels[row][col].setColor(new Color(255 - p.getRed(),
+                                               255 - p.getGreen(),
+                                               255 - p.getBlue()));
+      }
+    }
+    negImg.explore();
 
     // Image #3 Using the original image and pixels, create a grayscale version of the image
     Picture grayscaleImg = new Picture(pictureFile);
@@ -48,7 +55,9 @@ public class ImageApp
     /* to be implemented */
     for (int row = 0; row < grayscalePixels.length; row++) {
       for (int col = 0; col < grayscalePixels[0].length; col++) {
-        int avg = (origPixels[row][col].getRed() + origPixels[row][col].getGreen() + origPixels[row][col].getBlue()) / 3;
+        int avg = (origPixels[row][col].getRed() +
+                   origPixels[row][col].getGreen() +
+                   origPixels[row][col].getBlue()) / 3;
         grayscalePixels[row][col].setColor(new Color(avg, avg, avg));
       }
     }
@@ -73,13 +82,9 @@ public class ImageApp
 
     /* to be implemented */
 
-
     // Final Image: Add a small image to a larger one
 
     /* to be implemented */
-
-
-
 
     // for testing  2D algorithms
     int[][] test1 = { { 1, 2, 3, 4 },
@@ -87,7 +92,5 @@ public class ImageApp
         { 9, 10, 11, 12 },
         { 13, 14, 15, 16 } };
     int[][] test2 = new int[4][4];
-
-
   }
 }
