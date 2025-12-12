@@ -526,19 +526,19 @@ public static Picture showDifferentArea (Picture pic, ArrayList<Point> myPoints)
     Pixel[][] originalPixels = pic.getPixels2D();
     Pixel[][] resultPixels = result.getPixels2D();
     
-    int originalHeight = originalPixels.length;
-    int originalWidth = originalPixels[0].length;
-    
-    for(int row = 0; row < originalHeight; row++)
+    int originalHeight = originalPixels.length - 1;
+    int originalWidth = originalPixels[0].length - 1;
+
+    for(int row = 0; row <= originalHeight; row++)
     {
-      for(int col = 0; col < originalWidth; col++)
+      for(int col = 0; col <= originalWidth; col++)
       {
         Vector2by1 originalPosition = new Vector2by1(row, col);
         Vector2by1 rotatedPosition = Matrix2by2.rotation90Clockwise(originalPosition);
         
-        int newRow = col;
-        int newCol = originalHeight - 1 - row;
-        
+        int newRow = (int)rotatedPosition.getA();
+        int newCol = (int)rotatedPosition.getB() + originalHeight;
+          
         resultPixels[newRow][newCol].setColor(originalPixels[row][col].getColor());
       }
     }
@@ -552,19 +552,19 @@ public static Picture showDifferentArea (Picture pic, ArrayList<Point> myPoints)
     Pixel[][] originalPixels = pic.getPixels2D();
     Pixel[][] resultPixels = result.getPixels2D();
     
-    int originalHeight = originalPixels.length;
-    int originalWidth = originalPixels[0].length;
-    
-    for(int row = 0; row < originalHeight; row++)
+    int originalHeight = originalPixels.length - 1;
+    int originalWidth = originalPixels[0].length - 1;
+
+    for(int row = 0; row <= originalHeight; row++)
     {
-      for(int col = 0; col < originalWidth; col++)
+      for(int col = 0; col <= originalWidth; col++)
       {
         Vector2by1 originalPosition = new Vector2by1(row, col);
         Vector2by1 rotatedPosition = Matrix2by2.rotation90CounterClockwise(originalPosition);
-        
-        int newRow = originalWidth - 1 - col;
-        int newCol = row;
-        
+            
+        int newRow = (int)rotatedPosition.getA() + originalWidth;
+        int newCol = (int)rotatedPosition.getB();
+              
         resultPixels[newRow][newCol].setColor(originalPixels[row][col].getColor());
       }
     }
@@ -574,23 +574,23 @@ public static Picture showDifferentArea (Picture pic, ArrayList<Point> myPoints)
 
   public static Picture rotateImage180(Picture pic)
   {
-    Picture result = new Picture(pic.getWidth(), pic.getHeight());
+    Picture result = new Picture(pic.getHeight(), pic.getWidth());
     Pixel[][] originalPixels = pic.getPixels2D();
     Pixel[][] resultPixels = result.getPixels2D();
     
-    int originalHeight = originalPixels.length;
-    int originalWidth = originalPixels[0].length;
-    
-    for(int row = 0; row < originalHeight; row++)
+    int originalHeight = originalPixels.length - 1;
+    int originalWidth = originalPixels[0].length - 1;
+
+    for(int row = 0; row <= originalHeight; row++)
     {
-      for(int col = 0; col < originalWidth; col++)
+      for(int col = 0; col <= originalWidth; col++)
       {
         Vector2by1 originalPosition = new Vector2by1(row, col);
         Vector2by1 rotatedPosition = Matrix2by2.rotation180(originalPosition);
         
-        int newRow = originalHeight - 1 - row;
-        int newCol = originalWidth - 1 - col;
-        
+        int newRow = (int)rotatedPosition.getA() + originalHeight;
+        int newCol = (int)rotatedPosition.getB() + originalWidth;
+              
         resultPixels[newRow][newCol].setColor(originalPixels[row][col].getColor());
       }
     }
