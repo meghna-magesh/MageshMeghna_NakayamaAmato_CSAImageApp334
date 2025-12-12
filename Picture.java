@@ -117,6 +117,7 @@ public class Picture extends SimplePicture
     } 
   }
   
+
   /** Mirror just part of a picture of a temple */
   public void mirrorTemple()
   {
@@ -370,6 +371,7 @@ public void setLow(Color c){
 /**
  * Sets the highest two bits of each pixel's colors to the lowest two bits of each pixel's colors
  */
+
 public void reveal(){
     Pixel leftPixel = null;
     
@@ -506,54 +508,135 @@ public static Picture showDifferentArea (Picture pic, ArrayList<Point> myPoints)
       pixel = result.getPixel(maxCol, row);
       pixel.setColor(Color.red);
    }
-    /*
+  /*
    Outside of AP subset, but easy way to accomplish the task
    int width = maxCol - minCol;
    int height = maxRow - minRow;   
    Graphics g = result.getGraphics();
    g.setColor(Color.red);
    g.drawRect(minCol, minRow, width, height);
-   */
+  */
    return result;
 }
 
+  // image rotation using the Matrix2by2 and Vector2by1 classes
+  public static Picture rotateImage90CW(Picture pic)
+  {
+    Picture result = new Picture(pic.getWidth(), pic.getHeight());
+    Pixel[][] originalPixels = pic.getPixels2D();
+    Pixel[][] resultPixels = result.getPixels2D();
+    
+    int originalHeight = originalPixels.length;
+    int originalWidth = originalPixels[0].length;
+    
+    for(int row = 0; row < originalHeight; row++)
+    {
+      for(int col = 0; col < originalWidth; col++)
+      {
+        Vector2by1 originalPosition = new Vector2by1(row, col);
+        Vector2by1 rotatedPosition = Matrix2by2.rotation90Clockwise(originalPosition);
+        
+        int newRow = col;
+        int newCol = originalHeight - 1 - row;
+        
+        resultPixels[newRow][newCol].setColor(originalPixels[row][col].getColor());
+      }
+    }
+    
+    return result;
+  }
+
+  public static Picture rotateImage90CCW(Picture pic)
+  {
+    Picture result = new Picture(pic.getWidth(), pic.getHeight());
+    Pixel[][] originalPixels = pic.getPixels2D();
+    Pixel[][] resultPixels = result.getPixels2D();
+    
+    int originalHeight = originalPixels.length;
+    int originalWidth = originalPixels[0].length;
+    
+    for(int row = 0; row < originalHeight; row++)
+    {
+      for(int col = 0; col < originalWidth; col++)
+      {
+        Vector2by1 originalPosition = new Vector2by1(row, col);
+        Vector2by1 rotatedPosition = Matrix2by2.rotation90CounterClockwise(originalPosition);
+        
+        int newRow = originalWidth - 1 - col;
+        int newCol = row;
+        
+        resultPixels[newRow][newCol].setColor(originalPixels[row][col].getColor());
+      }
+    }
+    
+    return result;
+  }
+
+  public static Picture rotateImage180(Picture pic)
+  {
+    Picture result = new Picture(pic.getWidth(), pic.getHeight());
+    Pixel[][] originalPixels = pic.getPixels2D();
+    Pixel[][] resultPixels = result.getPixels2D();
+    
+    int originalHeight = originalPixels.length;
+    int originalWidth = originalPixels[0].length;
+    
+    for(int row = 0; row < originalHeight; row++)
+    {
+      for(int col = 0; col < originalWidth; col++)
+      {
+        Vector2by1 originalPosition = new Vector2by1(row, col);
+        Vector2by1 rotatedPosition = Matrix2by2.rotation180(originalPosition);
+        
+        int newRow = originalHeight - 1 - row;
+        int newCol = originalWidth - 1 - col;
+        
+        resultPixels[newRow][newCol].setColor(originalPixels[row][col].getColor());
+      }
+    }
+    
+    return result;
+  }
  
   /* Main method for testing - each class in Java can have a main 
    * method 
    */
   public static void main(String[] args) 
   {
-    Picture beach = new Picture("beach.jpg");
-    Picture beach2 = new Picture("beach.jpg");  //unaltered beach pic
-    Picture swan = new Picture("swan.jpg");
-    Picture swan2 = new Picture("swan.jpg");
+    Picture beach = new Picture("lib/beach.jpg");
+    Picture beach2 = new Picture("lib/beach.jpg");  //unaltered beach pic
+    Picture swan = new Picture("lib/arch.jpg");
+    Picture swan2 = new Picture("lib/arch.jpg");
     //Picture robot = new Picture("robot.jpg");
     //Picture flower1 = new Picture("flower1.jpg");
-    //Picture flower2 = new Picture("flower2.jpg");
-    System.out.println("Beach and swan: " + isSame(beach, swan));
-    System.out.println("Swan and swan2: " + isSame(swan, swan2));
-    //swan.clearLow();
-    System.out.println("Swan and swan2 after clearLow on swan: " + isSame(swan, swan2));
-    ArrayList<Point> pointList = findDifferences(swan2, swan2);
-    System.out.println("PointList has a size of " + pointList.size());
-    for(int i = 0; i < pointList.size(); i++)
-      System.out.println(pointList.get(i));
-  // these lines hide and revel a hidden pic
-    beach.explore();
-    swan.explore();
-    beach.hide(swan);
-    beach.explore();
-    beach.unhide();
-    beach.explore();
+  //   //Picture flower2 = new Picture("flower2.jpg");
+  //   System.out.println("Beach and swan: " + isSame(beach, swan));
+  //   System.out.println("Swan and swan2: " + isSame(swan, swan2));
+  //   //swan.clearLow();
+  //   System.out.println("Swan and swan2 after clearLow on swan: " + isSame(swan, swan2));
+  //   ArrayList<Point> pointList = findDifferences(swan2, swan2);
+  //   System.out.println("PointList has a size of " + pointList.size());
+  //   for(int i = 0; i < pointList.size(); i++)
+  //     System.out.println(pointList.get(i));
+  // // these lines hide and revel a hidden pic
+  //   beach.explore();
+  //   swan.explore();
+  //   beach.hide(swan);
+  //   beach.explore();
+  //   beach.unhide();
+  //   beach.explore();
 
+    Picture.rotateImage90CW(beach).explore();
+    Picture.rotateImage90CCW(beach).explore();
+    Picture.rotateImage180(beach).explore();
 
    // swan.explore();
     //beach.hide(robot, 65, 208);
     //beach.hide(flower1, 280, 110);
     //beach.hide(flower2, 322, 432);
     //beach.explore();
-    pointList = findDifferences(beach2, beach);
-    System.out.println("PointList has a size of " + pointList.size());
+    // pointList = findDifferences(beach2, beach);
+    // System.out.println("PointList has a size of " + pointList.size());
    
     //Picture beach3 = colorDifference(beach, pointList);
     //beach3.show();
