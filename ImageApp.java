@@ -56,24 +56,6 @@ public class ImageApp
     }
     grayscaleImg.explore();
 
-    // Image #4 Using the original image and pixels, rotate it 180 degrees
-    Picture upsidedownImage = new Picture(pictureFile);
-    Pixel[][] upsideDownPixels = upsidedownImage.getPixels2D();
-
-    /* to be implemented */
-
-    // Image #5 Using the original image and pixels, rotate image 90
-    Picture rotateImg = new Picture(pictureFile);
-    Pixel[][] rotatePixels = rotateImg.getPixels2D();
-
-    /* to be implemented */
-
-    // Image #6 Using the original image and pixels, rotate image -90
-    Picture rotateImg2 = new Picture(pictureFile);
-    Pixel[][] rotatePixels2 = rotateImg2.getPixels2D();
-
-    /* to be implemented */
-
     // Final Image: Add a small image to a larger one
     Picture largeImg = new Picture(pictureFile);
     Picture smallImg = new Picture(smallerPictureFile);
@@ -83,7 +65,7 @@ public class ImageApp
       for (int c = 0; c < small[0].length; c++) {
         Pixel sp = small[r][c];
         if (sp.getRed() == 255 && sp.getGreen() == 255 && sp.getBlue() == 255)
-          continue;
+          break;
         if (r + 100 < large.length && c + 100 < large[0].length) {
           large[r + 100][c + 100].setColor(sp.getColor());
         }
