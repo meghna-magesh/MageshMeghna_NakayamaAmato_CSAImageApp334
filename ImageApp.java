@@ -65,7 +65,7 @@ public class ImageApp
       for (int c = 0; c < small[0].length; c++) {
         Pixel sp = small[r][c];
         if (sp.getRed() == 255 && sp.getGreen() == 255 && sp.getBlue() == 255)
-          break;
+          continue;
         if (r + 100 < large.length && c + 100 < large[0].length) {
           large[r + 100][c + 100].setColor(sp.getColor());
         }
